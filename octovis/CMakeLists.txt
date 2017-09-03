@@ -1,7 +1,13 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT( octovis )
-
+set(CMAKE_CXX_FLAGS "-std=c++11" CACHE STRING "compile flags" FORCE)
 include(CTest)
+
+
+option(OCTOVIS_QT5 "Link Octovis against Qt5?" ON)
+if(OCTOVIS_QT5)
+    FIND_PACKAGE(Qt4)
+endif(NOT OCTOVIS_QT5)
 
 # # version (e.g. for packaging)
 set(OCTOVIS_MAJOR_VERSION 1)
@@ -46,6 +52,7 @@ find_package(octomap ${OCTOVIS_MAJOR_VERSION}.${OCTOVIS_MINOR_VERSION} REQUIRED
 HINTS ${CMAKE_SOURCE_DIR}/lib/cmake/octomap
 ${CMAKE_SOURCE_DIR}/../octomap/lib/cmake/octomap
 )
+
 MESSAGE(STATUS "Found octomap version: " ${octomap_VERSION})
 
 INCLUDE_DIRECTORIES(${OCTOMAP_INCLUDE_DIRS})
